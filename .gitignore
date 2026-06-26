@@ -4,3 +4,4 @@ result
 # Archivos con información sensible o regenerables
 hardware-configuration.nix   # opcional: contiene UUIDs de disco
 flake.lock                  # mejor regenerarlo al clonar
+hardware-configuration.nix
