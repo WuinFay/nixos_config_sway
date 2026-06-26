@@ -1,0 +1,101 @@
+{
+    "custom/launcher": {
+        "format": "",
+        "on-click": "rofi -show drun"
+    },
+    
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "  0",
+            "2": "  1",
+            "3": "  2",
+            "4": "  3",
+            "5": " 4",
+            "6": " 5",
+            "7": "  6",
+            "8": "  7",
+            "9": "  8",
+            "10": "  9"
+        },
+        "current-only": false,
+        "disable-scroll-wraps": true
+    },
+    
+    "sway/window": {
+        "rewrite": {
+            "(.*) - Brave": "$1",
+            "(.*) - Chromium": "$1",
+            "(.*) - Brave Search": "$1",
+            "(.*) - Outlook": "$1",
+            "(.*) Microsoft Teams": "$1"
+        },
+        "separate-outputs": true,
+        "format": "{}"
+    },
+    
+"custom/media": {
+    "format": "{}",
+    "return-type": "json",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "exec": "~/.config/waybar/scripts/mediaplayer.sh",
+    "interval": 2,
+    "tooltip": true
+},
+    
+"custom/cpu-profile": {
+    "exec": "~/.config/waybar/scripts/cpu-profile-status.sh",
+    "interval": 5,
+    "return-type": "json",
+    "format": "{}",
+    "on-click": "~/.config/waybar/scripts/cpu-profile-toggle.sh",
+    "tooltip": true,
+    "tooltip-format": "Clic para cambiar perfil CPU"
+},
+                
+    "network": {
+        "interval": 2,
+        "format-wifi": " {essid}",
+        "format-ethernet": "󰈀 RJ45",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰤭 Disc.",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": " {essid} ({signalStrength}%)",
+        "on-click": "sakura -e nmtui"
+    },
+    
+    "pulseaudio": {
+        "format": "{icon} {volume: >2}%",
+        "format-bluetooth": "{icon} {volume: >2}%",
+        "format-muted": " muted",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+    
+    "clock": {
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%d/%m/%Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "interval": 1
+    },
+    
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "wlogout",
+        "tooltip": false
+    }
+}

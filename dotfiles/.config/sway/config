@@ -1,0 +1,164 @@
+# ============================================================
+# ~/.config/sway/config
+# Hardware: Ryzen 5 5600G + RX 7600 XFX | CachyOS / Sway
+# ============================================================
+exec systemctl --user set-environment GTK_ICON_THEME=Adwaita
+exec systemctl --user import-environment GTK_ICON_THEME
+# --- ENTORNO DE SESIÓN ---
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec systemctl --user start sway-session.target
+exec systemctl --user import-environment XDG_CURRENT_DESKTOP
+# --- AUTOSTART ---
+# Nota el 'sleep 2' para dar tiempo a que las variables de arriba se procesen por completo
+exec /run/current-system/sw/bin/lxqt-policykit-agent
+exec ~/.local/bin/mic-keepalive.sh
+exec gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+exec systemctl --user import-environment GTK_ICON_THEME
+
+# --- MODO NOCTURNO (7pm - 7am) ---
+exec wlsunset -s 07:00 -S 19:00 -t 6500 -T 3500
+seat seat0 xcursor_theme breeze_cursors 24
+
+# --- INPUT ---
+input type:keyboard {
+    xkb_layout latam
+    repeat_delay 400
+    repeat_rate 25
+}
+
+input type:mouse {
+    accel_profile flat
+    pointer_accel 0
+}
+
+# --- REGLAS DE VENTANA ---
+for_window [class="sakura"] floating enable
+for_window [class="sakura"] opacity 0.95
+for_window [app_id="steam"] floating enable
+
+# Blood Strike (NetEase)
+for_window [class="bloodstrike.exe"] fullscreen enable
+for_window [class="bloodstrike.exe"] allow_tearing yes
+for_window [class="bloodstrike.exe"] max_render_time off
+
+# Inhibit idle — XWayland y Wayland nativo
+for_window [class="."] inhibit_idle visible
+for_window [app_id="."] inhibit_idle visible
+
+# L4D2 / Source Engine
+for_window [class="hl2_linux"] fullscreen enable
+for_window [class="hl2_linux"] allow_tearing yes
+for_window [class="hl2_linux"] max_render_time off
+
+# DOOM
+for_window [class="DOOMBoard"] fullscreen enable
+for_window [class="DOOMBoard"] allow_tearing yes
+for_window [class="DOOMBoard"] max_render_time off
+for_window [class="DoomEternal"] fullscreen enable
+for_window [class="DoomEternal"] allow_tearing yes
+for_window [class="DoomEternal"] max_render_time off
+# Roblox (Sober Flatpak)
+for_window [app_id="org.sober.Sober"] fullscreen enable
+for_window [app_id="org.sober.Sober"] allow_tearing yes
+for_window [app_id="org.sober.Sober"] max_render_time off
+for_window [app_id="org.sober.Sober"] inhibit_idle focus
+for_window [class="org.sober.Sober"] allow_tearing yes
+
+
+# --- ATAJOS (Keybindings) ---
+set $mod Mod4
+
+bindsym $mod+Return exec sakura
+bindsym $mod+Shift+o exec obs
+bindsym $mod+m exec gnome-text-editor
+bindsym $mod+q kill
+
+# Capturas de pantalla
+bindsym Print exec ~/.config/sway/scripts/screenshot.sh screen
+bindsym Shift+Print exec ~/.config/sway/scripts/screenshot.sh area
+bindsym $mod+Print exec ~/.config/sway/scripts/screenshot.sh active
+
+# Audio
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Alternar entre la ventana actual y la anterior
+bindsym Alt+Tab workspace back_and_forth
+#bindsym Alt+Tab exec swayr switch-window
+exec waybar
+
+# Portapapeles
+bindsym $mod+Shift+x exec sh -c "cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+
+# --- INCLUDES ---
+include "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf"
+
+# ── Iconos en layout tabbed (pestañas) ──────────────────────────
+for_window [app_id="org.gnome.Nautilus"]     title_format " Archivos"   # Archivos
+for_window [app_id="org.gnome.TextEditor"]   title_format " Editor Texto"   # Editor texto
+for_window [app_id="sakura"]                title_format " Terminal"   # Terminal
+for_window [app_id="mpv"]                   title_format " Reproductor Video"   # Reproductor video
+for_window [app_id="obsidian"]              title_format " Notas Obsidian"   # Notas
+for_window [app_id="libreoffice-writer"]    title_format " Word"   # Writer
+for_window [app_id="chromium"]              title_format " Navegador"   # Navegador
+for_window [app_id="org.gnome.Loupe"]       title_format " Visor de imagenes"   # Visor imágenes
+for_window [app_id="vesktop"]               title_format " Vesktop"   # Discord/Vesktop
+for_window [app_id="org.vinegarhq.Sober"]   title_format " Sober"   # Sober (emulador/juego)
+
+# Si alguna ventana XWayland aparece con null, puedes usar class:
+# ─── Íconos en pestañas (layout tabbed) ──────────────────────────
+# LibreOffice
+for_window [app_id="libreoffice-writer"]      title_format " Writer"
+for_window [app_id="libreoffice-calc"]        title_format " Calc"
+for_window [app_id="libreoffice-impress"]     title_format " Impress"
+for_window [app_id="libreoffice-draw"]        title_format " Draw"
+for_window [app_id="libreoffice-base"]        title_format " Base"
+for_window [app_id="libreoffice-math"]        title_format " Math"
+for_window [app_id="libreoffice-startcenter"] title_format " LO"
+
+# OnlyOffice (si lo instalas)
+for_window [app_id="onlyoffice-desktopeditors"] title_format " OnlyOffice"
+
+# WPS Office (si lo instalas)
+for_window [app_id="wps"]                     title_format " WPS Writer"
+for_window [app_id="wpp"]                     title_format " WPP"
+for_window [app_id="et"]                      title_format " ET"
+
+# ─── Aplicaciones que ya tienes ───────────────────────────────────
+for_window [app_id="org.gnome.Nautilus"]      title_format " Archivos"
+for_window [app_id="org.gnome.TextEditor"]    title_format " Editor"
+for_window [app_id="sakura"]                  title_format " Terminal"
+for_window [app_id="mpv"]                     title_format " MPV"
+for_window [app_id="obsidian"]                title_format " Obsidian"
+for_window [app_id="libreoffice-writer"]      title_format " Writer"  
+for_window [app_id="chromium"]                title_format " Chromium"
+for_window [app_id="org.gnome.Loupe"]         title_format " Visor"
+for_window [app_id="vesktop"]                 title_format " Discord"
+for_window [app_id="org.vinegarhq.Sober"]     title_format " Sober"
+
+# ─── Otras GUI detectadas en tu sistema ───────────────────────────
+for_window [app_id="foot"]                    title_format " Foot"
+for_window [app_id="kitty"]                   title_format " Kitty"
+for_window [app_id="org.gnome.Baobab"]        title_format " Baobab"
+for_window [app_id="org.gnome.FileRoller"]    title_format " Archivador"
+for_window [app_id="kiwix-desktop"]           title_format " Kiwix"
+for_window [app_id="lact"]                    title_format " LACT"
+for_window [app_id="lutris"]                  title_format " Lutris"
+for_window [app_id="meld"]                    title_format " Meld"
+for_window [app_id="mission-center"]          title_format " Monitor"
+for_window [app_id="nm-connection-editor"]    title_format " Redes"
+
+for_window [app_id="pavucontrol"]             title_format " Sonido"
+for_window [app_id="proton-vpn-gtk-app"]      title_format " ProtonVPN"
+for_window [app_id="qdiskinfo"]               title_format " Discos"
+for_window [app_id="stacer"]                  title_format " Stacer"
+for_window [app_id="vlc"]                     title_format " VLC"
+
+# ─── Aplicaciones X11 (app_id = null) → usar class ───────────────
+for_window [class="Steam"]                    title_format " Steam"
+for_window [class="nsxiv"]                    title_format " nsxiv"
+for_window [class="Psensor"]                  title_format " Psensor"
+for_window [class="Sklauncher"]               title_format " Minecraft"
+

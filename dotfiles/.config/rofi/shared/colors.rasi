@@ -1,0 +1,15 @@
+/* Copyright (C) 2020-2023 Aditya Shakya <adi1090x@gmail.com> */
+/*Credits: Build a Minimalist Linux Desktop with SwayWM – Part 1: Waybar-CodeOps HQ
+/* Colors - Temática Espacial / Glassmorphism */
+
+/* Colors - Temática Espacial / Glassmorphism */
+
+* {
+  background:     rgba(5, 5, 15, 0.75);      /* Fondo oscuro espacial con transparencia */
+  background-alt: rgba(255, 255, 255, 0.05); /* Cristal sutil para las barras interiores */
+  border:         rgba(255, 255, 255, 0.15); /* Borde tipo cristal esmerilado */
+  foreground:     #ffffff;                   /* Texto blanco brillante */
+  selected:       #00d4ff;                   /* Cian neón (como el icono de tu launcher) */
+  active:         #8a2be2;                   /* Morado nebulosa */
+  urgent:         #ff4b4b;                   /* Rojo para errores/urgencias */
+}

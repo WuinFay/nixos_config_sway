@@ -1,0 +1,191 @@
+@import "colors.css";
+
+/* ── Reset General ─────────────────────────────────────────── */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font Propo", "Adwaita Sans", sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+window#waybar {
+    background: transparent; /* Mantenemos transparente para que SwayFX haga el blur de fondo */
+    color: #ffffff;
+}
+
+/* ── Tooltips (Estilo Espacial) ──────────────────────────────── */
+tooltip {
+    background: rgba(10, 10, 25, 0.9);
+    border: 1px solid rgba(138, 43, 226, 0.5);
+    border-radius: 12px;
+}
+
+tooltip label {
+    padding: 5px;
+    color: #ffffff;
+}
+
+/* ── Píldora base (Efecto Glassmorphism Espacial) ────────────── */
+#custom-launcher,
+#workspaces,
+#clock,
+#pulseaudio,
+#network,
+#tray,
+#custom-power {
+    background-color: rgba(255, 255, 255, 0.07); /* Fondo muy sutil */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde fino tipo cristal */
+    border-radius: 50px;
+    padding: 3px 12px;
+    margin: 4px 4px;
+    color: #e0e0e0;
+    /* Un ligero resplandor para que parezcan estrellas/nebulosas */
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05); 
+    transition: all 0.3s ease;
+}
+
+/* ── Áreas de Trabajo (Workspaces) con Efecto Elástico ─────────── */
+#workspaces {
+    padding: 3px 4px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 0 3px;
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.4);
+    background: transparent;
+    /* Reducimos el ancho base para que la expansión sea mayor */
+    min-width: 18px; 
+    /* Esta es la fórmula del "rebote" elástico */
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.9);
+}
+
+#workspaces button.focused {
+    background: #333; /* Tu gris oscuro/morado */
+    color: #ffffff;
+    /* Aumentamos el ancho para que se note el "estiramiento" */
+    min-width: 45px; 
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.6);
+}
+
+#workspaces button:hover {
+    background: rgba(138, 43, 226, 0.3);
+    color: #ffffff;
+    min-width: 30px; /* También se expande un poco al pasar el mouse */
+}
+/* ── Reloj y Calendario (Centro) ────────────────────────────── */
+#clock {
+    color: #ffffff;
+    font-weight: 700;
+    background: rgba(10, 10, 25, 0.5);
+}
+
+/* ── Red (Network) ──────────────────────────────────────────── */
+#network {
+    color: #ffffff;
+}
+
+#network.disconnected {
+    color: #555555;
+}
+
+/* ── Sonido (Audio) ─────────────────────────────────────────── */
+#pulseaudio {
+    color: #ffffff;
+}
+
+#pulseaudio.muted {
+    color: #555555;
+}
+
+/* ── Botón de Apagado (Power) ───────────────────────────────── */
+#custom-power {
+    color: #ff4b4b;
+    padding-right: 14px;
+    padding-left: 14px;
+}
+
+/* ── Lanzador (Custom Launcher) ─────────────────────────────── */
+#custom-launcher {
+    color: #00d4ff;
+    padding-right: 15px;
+    font-size: 14px;
+}
+
+#custom-launcher:hover {
+    text-shadow: 0 0 10px #8a2be2; /* Mantenemos su brillo de texto particular */
+}
+
+/* ── Tray ───────────────────────────────────────────────────── */
+#tray {
+    padding: 3px 8px; /* Un poco más de espacio dentro del contenedor general del tray */
+}
+
+#tray menu {
+    /* Esto estiliza el menú contextual si lo abres */
+    background: #0a0a0a;
+    color: #ffffff;
+}
+
+/* AQUÍ EL CAMBIO: Usamos > * para atrapar cualquier contenedor de ícono en el tray */
+#tray > * {
+    transition: all 0.3s ease;
+    padding: 0 4px; /* Espaciado interior */
+    margin: 0 4px;  /* Separación real entre cada icono individual */
+}
+
+/* ── Efectos Hover Globales (Unificados) ────────────────────── */
+/* Aplica el mismo fondo negro translúcido a todos al pasar el mouse */
+#clock:hover,
+#network:hover,
+#pulseaudio:hover,
+#custom-power:hover,
+#custom-launcher:hover,
+#tray > *:hover { /* AQUÍ EL CAMBIO: El hover también usa > * */
+    background-color: rgba(15, 15, 15, 0.85);
+    border-radius: 50px;
+}
+
+
+/* ── Reproductor Multimedia (Centro) ────────────────────────── */
+#custom-media {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 3px 18px;
+    margin: 4px 4px;
+    color: #e0e0e0;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    min-width: 28px; /* para que no se colapse */
+}
+#custom-media.playing { color: #00d4ff; }
+#custom-media.paused  { color: #ffaa00; }
+#custom-media.stopped { color: #555555; }
+
+/* ── Perfil de CPU (Turbo/Normal) ───────────────────────────── */
+#custom-cpu-profile {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 3px 18px;
+    margin: 4px 4px;
+    color: #e0e0e0;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+#custom-cpu-profile.turbo {
+    color: #ff4b4b;   /* rojo como el botón de apagado */
+    background-color: rgba(255, 75, 75, 0.1);
+}
+
+#custom-cpu-profile.normal {
+    color: #00d4ff;   /* cian como el launcher */
+    background-color: rgba(0, 212, 255, 0.1);
+}

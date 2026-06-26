@@ -1,0 +1,227 @@
+/*****----- Configuration -----*****/
+configuration {
+    modi:                       "drun,run,window";
+    show-icons:                 true;
+    display-drun:               "󱓞";
+    display-run:                "";
+    display-window:             "󰣇";
+    drun-display-format:        "{name}";
+}
+
+/*****----- Global Properties (Colores definidos directamente) -----*****/
+* {
+    /* Corregido a 8 caracteres válidos (o 6 si no quieres transparencia) */
+    background:      #1E1E2Eff; 
+    background-alt:  #313244ff;      
+    foreground:      #CDD6F4ff;      
+    border:          #89B4FAff;      
+    selected:        #89B4FAff;      
+    urgent:          #F38BA8ff;      
+    
+    font:            "Fira Code Nerd Font 12";
+}
+
+/*****----- Main Window -----*****/
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       800px;
+    height:                      520px; /* Añade esto para controlar la altura total */
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      3px solid; 
+    border-radius:               35px;
+    border-color:                var(border);
+    cursor:                      "default";
+    background-color:            var(background);
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     30px 30px 45px 30px; /* Añade más espacio abajo */
+    background-color:            transparent;
+    children:                    [ "inputbar", "message", "listview", "mode-switcher" ];
+}
+
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px 2px 2px 0px;
+    border-radius:               10px;
+    border-color:                var(selected);
+    background-color:            var(background-alt);
+    text-color:                  var(foreground);
+    children:                    [ "textbox-prompt-colon", "entry" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+textbox-prompt-colon {
+    enabled:                     true;
+    padding:                     0px;
+    expand:                      false;
+    str:                         " ";
+    background-color:            inherit;
+    text-color:                  var(selected); /* Lupa en color Cian */
+}
+entry {
+    enabled:                     true;
+    padding:                     0px;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Buscar...";
+    placeholder-color:           rgba(255, 255, 255, 0.4);
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     2;
+    lines:                       7;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     5px;
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    cursor:                      "default";
+}
+scrollbar {
+    handle-width:                5px ;
+    handle-color:                var(selected);
+    border-radius:               10px;
+    background-color:            var(background-alt);
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     6px;
+    border-radius:               10px;
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    cursor:                      pointer;
+}
+element normal.normal,
+element alternate.normal {
+    background-color:            transparent;
+    text-color:                  var(foreground);
+}
+element normal.urgent,
+element alternate.urgent,
+element selected.active {
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    border:                      0px 2px 2px 0px;
+    border-radius:               10px;
+    border-color:                var(selected);
+}
+element normal.active,
+element alternate.active,
+element selected.urgent {
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    border:                      2px;
+    border-color:                var(urgent);
+}
+
+/* EL TOQUE MAESTRO: Elemento seleccionado igual a tu Waybar */
+element selected.normal {
+    background-color:            #000000; /* Fondo negro sólido */
+    text-color:                  #ffffff; /* Texto blanco puro */
+    border:                      0px 2px 2px 0px;
+    border-radius:               10px;
+    border-color:                var(selected); /* Borde cian que da efecto 3D/Sombra */
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        24px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+/*****----- Mode Switcher -----*****/
+mode-switcher{
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     5px 250px;
+    background-color:            transparent;
+    text-color:                  var(foreground);
+}
+button {
+    padding:                     8px 10px 12px 10px; /* Menos espacio arriba, más aire abajo */
+    border-radius:               12px;
+    background-color:            var(background-alt);
+    text-color:                  inherit;
+    cursor:                      pointer;
+    font:                        "Fira Code Nerd Font 18"; /* Bajado a 16 para controlar el icono gigante */
+    vertical-align:              0.5; /* Centra verticalmente el icono */
+}
+button selected {
+    background-color:            #000000;
+    text-color:                  var(selected);
+    border:                      2px 2px 2px 2px;
+    border-radius:               12px;
+    border-color:                var(selected);
+}
+
+
+/*****----- Message -----*****/
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     10px;
+    border-radius:               10px;
+    background-color:            var(background-alt);
+    text-color:                  var(foreground);
+}
+textbox {
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    highlight:                   none;
+    placeholder-color:           var(foreground);
+    blink:                       true;
+    markup:                      true;
+}
+error-message {
+    padding:                     30px;
+    background-color:            var(background);
+    text-color:                  var(foreground);
+}
+

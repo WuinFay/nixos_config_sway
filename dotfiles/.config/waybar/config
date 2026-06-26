@@ -1,0 +1,36 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 5,
+    "margin-top": 8,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-bottom": 0,
+    "reload_style_on_change": true,
+
+    "modules-left": [
+        "custom/launcher",
+        "sway/workspaces",
+	"tray"
+    ],
+    
+    "modules-center": [
+      "clock"   
+    ],
+    
+"modules-right": [
+    "custom/cpu-profile",
+    "network",
+    "pulseaudio",
+    "custom/media",
+    "custom/power"
+],
+    
+    "tray": {
+        "icon-size": 18,
+        "spacing": 12
+    },
+    
+    "include": ["~/.config/waybar/modules.json"]
+}
