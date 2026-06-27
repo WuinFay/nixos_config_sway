@@ -48,9 +48,9 @@ alias revisar='cd /home/lonso/nixos-config && nix flake check'
 
 # Versión ultra-segura: añade TODO lo que haya en el repo
 alias respaldar='\
-  cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && \
+  rsync -av ~/.bashrc ~/nixos-config/dotfiles/ && \
   cd ~/nixos-config && \
-  git add . && \
+  git add -A && \
   git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
   git push origin main --force'
 
