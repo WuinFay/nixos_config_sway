@@ -10,7 +10,7 @@
   # ── Bootloader ────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 6;
+  boot.loader.timeout = 4;
   boot.loader.systemd-boot.configurationLimit = 8;
 
   # Kernel latest (rolling release)
