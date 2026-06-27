@@ -73,12 +73,24 @@ boot.kernelParams = [
   #programs.waybar.enable  = true;
   programs.dconf.enable   = true;
   security.polkit.enable  = true;
- programs.nix-ld.enable = true;
-programs.nix-ld.libraries = with pkgs; [
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
   # Agrega aquí las librerías dinámicas básicas que pueda llegar a necesitar el agente
   stdenv.cc.cc.lib
   zlib
 ];
+  # Módulo oficial de NixOS para habilitar la extensión automáticamente
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "sakura";
+  };
+
+# Configuración global de dconf para la extensión de Nautilus
+  # Habilitar dconf (Obligatorio)
+  # Configuración correcta para forzar a la extensión a usar Sakura
+
+
+
 
   # ── XDG Portals ───────────────────────────────────────────────
   xdg.portal = {
@@ -235,7 +247,7 @@ fonts.packages = with pkgs; [
   adwaita-icon-theme wireplumber 
   hicolor-icon-theme gsettings-desktop-schemas
   gnome-themes-extra kdePackages.breeze
-  gsettings-desktop-schemas
+  nautilus-python       # <-- CAMBIADO: Antes era gnome.nautilus-python
   # Wayland / Sway
   rofi wlogout swaybg wlsunset swayosd nwg-look waybar
   grim slurp wl-clipboard wf-recorder cliphist pkgs.lxqt.lxqt-policykit
