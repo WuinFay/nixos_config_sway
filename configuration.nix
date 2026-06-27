@@ -10,7 +10,7 @@
   # ── Bootloader ────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 4;
+  boot.loader.timeout = 6;
   boot.loader.systemd-boot.configurationLimit = 8;
 
   # Kernel latest (rolling release)
@@ -268,7 +268,7 @@ fonts.packages = with pkgs; [
   (writeShellApplication {
     name = "perfil-cpu";
     runtimeInputs = [ bash coreutils gawk ];
-    text = builtins.readFile "/home/lonso/.config/waybar/scripts/perfil-cpu.sh";
+    text = builtins.readFile ./scripts/perfil-cpu.sh;
 
   })
 ];
