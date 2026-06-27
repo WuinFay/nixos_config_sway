@@ -36,17 +36,24 @@ export MOZ_ENABLE_WAYLAND=1
 
 alias gamemode='gamemoderun'
 alias grabar='wf-recorder -f "/run/media/lonso/ALONSOUSB/$(date +"%Y%m%d_%H%M%S").mp4"'
-
 alias normal='sudo /run/current-system/sw/bin/perfil-cpu normal'
 alias turbo='sudo /run/current-system/sw/bin/perfil-cpu turbo'
 alias nadmin='nautilus admin:///'
+# 1. Actualizar el sistema localmente (sin subir a GitHub)
+alias respaldar='cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && cd ~/nixos-config && git add . && git commit -m "Actualización: $(date +%d-%m-%Y_%H:%M)" && git push origin main'
 
+# 2. Entrar a la carpeta, preparar archivos y revisar el Flake
+alias revisar='cd /home/lonso/nixos-config && git add . && nix flake check'
+
+# 3. Guardar y subir a GitHub (con fecha y hora exacta)
+alias respaldar='cd /home/lonso/nixos-config && git add . && git commit -m "Actualización: $(date +%d-%m-%Y_%H:%M)" && git push origin main'
 
 # ── Juegos ──────────────────────────────────
 alias tmod="cd /home/lonso/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
 alias terra="cd /home/lonso/Terraria_Vanilla/terraria-server-1456/1456/Linux && ./TerrariaServer.bin.x86_64"
 alias mcjava="cd /home/lonso/minecraft-server && bash run.sh nogui"
-alias actualizar='sudo nixos-rebuild switch'
+
+
 # ── Bienvenida ────────────────────────────
 CIAN='\033[0;36m'
 BLANCO='\033[1;37m'
