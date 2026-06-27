@@ -3,4 +3,4 @@ result
 
 hardware-configuration.nix
 
-# Se regenera con 'nix flake lock' y es importante versionarlo
+

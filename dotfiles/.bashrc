@@ -50,7 +50,7 @@ alias revisar='cd /home/lonso/nixos-config && nix flake check'
 alias respaldar='\
   cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && \
   cd ~/nixos-config && \
-  git add -A && \
+  git add . && \
   git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
   git push origin main --force'
 
