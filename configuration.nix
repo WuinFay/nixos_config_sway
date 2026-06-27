@@ -72,6 +72,12 @@ boot.kernelParams = [
   #programs.waybar.enable  = true;
   programs.dconf.enable   = true;
   security.polkit.enable  = true;
+ programs.nix-ld.enable = true;
+programs.nix-ld.libraries = with pkgs; [
+  # Agrega aquí las librerías dinámicas básicas que pueda llegar a necesitar el agente
+  stdenv.cc.cc.lib
+  zlib
+];
 
   # ── XDG Portals ───────────────────────────────────────────────
   xdg.portal = {

@@ -53,12 +53,23 @@ alias respaldar='\
   git add -A && \
   git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
   git push origin main --force'
-
+alias copiar-config='\
+  echo "📂 Copiando dotfiles esenciales al repo..." && \
+  cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && \
+  cp -r ~/.config/fastfetch ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/gtk-3.0 ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/gtk-4.0 ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/rofi ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/sakura ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/sway ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/waybar ~/nixos-config/dotfiles/.config/ && \
+  cp -r ~/.config/wlogout ~/nixos-config/dotfiles/.config/ && \
+  echo "✅ Dotfiles copiados al repo. Ahora ejecuta respaldar"'
 # ── Juegos ──────────────────────────────────
 alias tmod="cd /home/lonso/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
 alias terra="cd /home/lonso/Terraria_Vanilla/terraria-server-1456/1456/Linux && ./TerrariaServer.bin.x86_64"
 alias mcjava="cd /home/lonso/minecraft-server && bash run.sh nogui"
-
+alias playit="~/.local/bin/playit --socket-path /tmp/playit_$(date +%s).sock"
 
 # ── Bienvenida ────────────────────────────
 CIAN='\033[0;36m'
