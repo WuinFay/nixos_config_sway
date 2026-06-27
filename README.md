@@ -67,3 +67,11 @@ claro que actualmente esta cambiado el waybar, rofi con mas scripts y cuestiones
 
 Hardware actual: Ryzen 5 5600G · RX 7600 (RDNA3)
 Estado: Rolling release (nixos-unstable)
+
+### ⚠️ Importante: hardware-configuration.nix
+
+Este archivo está en `.gitignore` para no subir información de hardware a GitHub. En una nueva instalación, **debes trackearlo localmente** para que Nix lo vea:
+
+```bash
+cp /etc/nixos/hardware-configuration.nix ~/nixos-config/
+git add -f hardware-configuration.nix
