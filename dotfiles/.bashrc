@@ -69,7 +69,7 @@ alias copiar-config='\
 alias tmod="cd /home/lonso/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
 alias terra="cd /home/lonso/Terraria_Vanilla/terraria-server-1456/1456/Linux && ./TerrariaServer.bin.x86_64"
 alias mcjava="cd /home/lonso/minecraft-server && bash run.sh nogui"
-alias playit="~/.local/bin/playit --socket-path /tmp/playit_$(date +%s).sock"
+alias playit='~/.local/bin/playit --socket-path /tmp/playit-manual.socket &'
 
 # ── Bienvenida ────────────────────────────
 CIAN='\033[0;36m'

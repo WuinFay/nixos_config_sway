@@ -54,9 +54,10 @@ boot.kernelParams = [
   users.users."lonso" = {
     isNormalUser = true;
     description  = "lonso";
-    extraGroups  = [ "networkmanager" "wheel" "video" "audio" "render" ];
+    extraGroups  = [ "networkmanager" "wheel" "video" "audio" "render" "openrazer" ];
     packages     = with pkgs; [];
   };
+
 
   # ── Paquetes no libres ────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
@@ -107,6 +108,8 @@ programs.nix-ld.libraries = with pkgs; [
   };
   hardware.amdgpu.initrd.enable    = true;
   hardware.amdgpu.overdrive.enable = true;
+  hardware.openrazer.enable = true;
+  hardware.openrazer.devicesOffOnScreensaver = false;
 
   # ── LACT — control de GPU ─────────────────────────────────────
   services.lact.enable = true;
@@ -224,7 +227,8 @@ fonts.packages = with pkgs; [
 
 
   environment.systemPackages = with pkgs; [
-
+  openrazer-daemon
+  polychromatic
   # Terminales
   sakura micro fastfetch htop linuxPackages.cpupower
   # Temas de íconos esenciales (faltaban)
