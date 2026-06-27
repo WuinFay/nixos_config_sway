@@ -40,13 +40,19 @@ alias normal='sudo /run/current-system/sw/bin/perfil-cpu normal'
 alias turbo='sudo /run/current-system/sw/bin/perfil-cpu turbo'
 alias nadmin='nautilus admin:///'
 # 1. Actualizar el sistema localmente (sin subir a GitHub)
-alias respaldar='cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && cd ~/nixos-config && git add . && git commit -m "Actualización: $(date +%d-%m-%Y_%H:%M)" && git push origin main'
+alias actualizar='sudo nixos-rebuild switch --flake /home/lonso/nixos-config#nixos'
 
-# 2. Entrar a la carpeta, preparar archivos y revisar el Flake
-alias revisar='cd /home/lonso/nixos-config && git add . && nix flake check'
 
-# 3. Guardar y subir a GitHub (con fecha y hora exacta)
-alias respaldar='cd /home/lonso/nixos-config && git add . && git commit -m "Actualización: $(date +%d-%m-%Y_%H:%M)" && git push origin main'
+# 2. Entrar a la carpeta y revisar el Flake (sin añadir automáticamente)
+alias revisar='cd /home/lonso/nixos-config && nix flake check'
+
+# Versión ultra-segura: añade TODO lo que haya en el repo
+alias respaldar='\
+  cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && \
+  cd ~/nixos-config && \
+  git add -A && \
+  git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
+  git push origin main --force'
 
 # ── Juegos ──────────────────────────────────
 alias tmod="cd /home/lonso/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
