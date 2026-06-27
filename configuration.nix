@@ -4,9 +4,11 @@
 
 { config, pkgs, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+	imports = [
+	  (if builtins.pathExists ./hardware-configuration.nix
+	   then ./hardware-configuration.nix
+	   else /etc/nixos/hardware-configuration.nix)
+	];
   # ── Bootloader ────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
