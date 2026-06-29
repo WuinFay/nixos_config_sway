@@ -92,11 +92,16 @@ boot.kernelParams = [
 
 
 
-  # ── XDG Portals ───────────────────────────────────────────────
+# ── XDG Portals ───────────────────────────────────────────────
   xdg.portal = {
     enable       = true;
     wlr.enable   = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    
+    config.sway = {
+      # Usamos mkForce para sobreescribir la configuración por defecto de Sway
+      default = pkgs.lib.mkForce [ "wlr" "gtk" ];
+    };
   };
 
   # ── Gestor de sesión — greetd + tuigreet ─────────────────────
