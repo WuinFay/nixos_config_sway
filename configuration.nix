@@ -22,8 +22,8 @@
   # amd-pstate activo mejora el governor de frecuencia en Zen 3
 boot.kernelParams = [ 
   "amd_pstate=active" 
-  "snd_hda_intel.power_save=0" 
-  "snd_hda_intel.power_save_controller=N" 
+  #"snd_hda_intel.power_save=0" 
+  #"snd_hda_intel.power_save_controller=N" 
 ];
   
   # ── Red ───────────────────────────────────────────────────────
@@ -243,7 +243,7 @@ fonts.packages = with pkgs; [
   shotcut
   polychromatic
   # Terminales
-  sakura micro fastfetch htop linuxPackages.cpupower
+  sakura micro fastfetch htop config.boot.kernelPackages.cpupower
   # Temas de íconos esenciales (faltaban)
   adwaita-icon-theme wireplumber 
   hicolor-icon-theme gsettings-desktop-schemas
@@ -266,7 +266,6 @@ fonts.packages = with pkgs; [
   # Apps de escritorio
   nautilus baobab loupe qbittorrent kooha chromium
   vesktop gnome-text-editor file-roller obsidian
-  adwaita-icon-theme
 
   # Ofimática
   libreoffice
