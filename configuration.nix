@@ -96,14 +96,14 @@ boot.kernelParams = [
   xdg.portal = {
     enable       = true;
     wlr.enable   = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    # Añadido xdg-desktop-portal-wlr por seguridad
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ]; 
     
-    # Asegura que las reglas de portal se apliquen a Sway
     configPackages = [ pkgs.sway ]; 
     
     config.sway = {
       default = [ "gtk" ];
-      screencast = [ "wlr" ]; # Obliga a usar wlroots para compartir pantalla
+      screencast = [ "wlr" ];
     };
   };
 
