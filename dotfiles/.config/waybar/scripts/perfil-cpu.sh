@@ -2,6 +2,7 @@
 # ============================================================
 # Script dinámico de rendimiento para Ryzen 5 5600
 # Usa amd-pstate en modo activo (EPP) + límite de frecuencia
+#perfil-cpu.sh
 # ============================================================
 
 # Comprobación de permisos

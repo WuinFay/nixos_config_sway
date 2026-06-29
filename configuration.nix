@@ -240,6 +240,7 @@ fonts.packages = with pkgs; [
 
   environment.systemPackages = with pkgs; [
   openrazer-daemon
+  shotcut
   polychromatic
   # Terminales
   sakura micro fastfetch htop linuxPackages.cpupower
