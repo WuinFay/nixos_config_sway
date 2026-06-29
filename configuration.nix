@@ -98,9 +98,12 @@ boot.kernelParams = [
     wlr.enable   = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     
+    # Asegura que las reglas de portal se apliquen a Sway
+    configPackages = [ pkgs.sway ]; 
+    
     config.sway = {
-      # Usamos mkForce para sobreescribir la configuración por defecto de Sway
-      default = pkgs.lib.mkForce [ "wlr" "gtk" ];
+      default = [ "gtk" ];
+      screencast = [ "wlr" ]; # Obliga a usar wlroots para compartir pantalla
     };
   };
 
