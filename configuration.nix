@@ -148,21 +148,34 @@ xdg.portal = {
     #jack.enable         = true;
   };
   # ── Evitar que WirePlumber suspenda los dispositivos ──────────
-  services.pipewire.wireplumber.extraConfig."51-disable-suspension" = {
-    "monitor.alsa.rules" = [
-      {
-        matches = [
-          { "node.name" = "~alsa_input.*"; }
-          { "node.name" = "~alsa_output.*"; }
-        ];
-        actions = {
-          update-props = {
-            "session.suspend-timeout-seconds" = 0;
-          };
+services.pipewire.wireplumber.extraConfig."51-disable-suspension" = {
+  "monitor.alsa.rules" = [
+    {
+      matches = [
+        { "node.name" = "~alsa_input.*"; }
+        { "node.name" = "~alsa_output.*"; }
+      ];
+      actions = {
+        update-props = {
+          "session.suspend-timeout-seconds" = 0;
         };
-      }
-    ];
-  };
+      };
+    }
+  ];
+  # AÑADE ESTO PARA ASEGURAR QUE EL MÓDULO DE CAPTURA DE PANTALLA ESTÉ ACTIVO
+  "pipewire-pulse.rules" = [
+    {
+      matches = [ { "application.process.binary" = "pipewire"; } ];
+      actions = {
+        update-props = {
+          "pulse.min.req" = "256/48000";
+          "pulse.default.format" = "S16LE";
+          "pulse.default.rate" = "48000";
+        };
+      };
+    }
+  ];
+};
   # ── RyzenAdj — temperatura máxima 75 °C ──────────────────────
   systemd.services.ryzenadj = {
     description = "Aplicar límites de RyzenAdj al inicio";

@@ -5,18 +5,22 @@
 exec systemctl --user set-environment GTK_ICON_THEME=Adwaita
 exec systemctl --user import-environment GTK_ICON_THEME
 # --- ENTORNO DE SESIÓN ---
-# 1. Exportar variables de entorno a Systemd y D-Bus
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 
-# 2. Reiniciar los portales para que lean las variables anteriores
+# --- REINICIO DE PORTALES (SOLUCIÓN DEFINITIVA) ---
+# Esperar a que el entorno esté listo
+exec sleep 2
+# Parar TODOS los portales
 exec systemctl --user stop xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+# Iniciar el portal wlr primero (necesario para Sway)
+exec systemctl --user start xdg-desktop-portal-wlr
+# Esperar un momento para que el wlr se registre
+exec sleep 1
+# Iniciar el portal gtk (para selectores de archivos)
+exec systemctl --user start xdg-desktop-portal-gtk
+# Finalmente, iniciar el portal principal
 exec systemctl --user start xdg-desktop-portal.service
-
-# 3. Lanzar agente de autenticación
-exec /run/current-system/sw/bin/lxqt-policykit-agent
-
-# 4. Iniciar el target de Sway
-exec systemctl --user start sway-session.target
 
 # --- AUTOSTART ---
 # Nota el 'sleep 2' para dar tiempo a que las variables de arriba se procesen por completo
