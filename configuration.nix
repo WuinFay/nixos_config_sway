@@ -93,19 +93,19 @@ boot.kernelParams = [
 
 
 # ── XDG Portals ───────────────────────────────────────────────
-  xdg.portal = {
-    enable       = true;
-    wlr.enable   = true;
-    # Añadido xdg-desktop-portal-wlr por seguridad
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ]; 
-    
-    configPackages = [ pkgs.sway ]; 
-    
-    config.sway = {
-      default = [ "gtk" ];
-      screencast = [ "wlr" ];
+
+# Configuración correcta de XDG Desktop Portals
+xdg.portal = {
+  enable = true;
+  wlr.enable = true; # Portal específico para compositores basados en wlroots como Sway
+  extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; # Necesario para los selectores de archivos/ventanas
+  config = {
+    common = {
+      default = [ "wlr" "gtk" ];
     };
   };
+};
+
 
   # ── Gestor de sesión — greetd + tuigreet ─────────────────────
   services.greetd = {
@@ -145,7 +145,7 @@ boot.kernelParams = [
     alsa.enable         = true;
     alsa.support32Bit   = true;
     pulse.enable        = true;
-    jack.enable         = true;
+    #jack.enable         = true;
   };
   # ── Evitar que WirePlumber suspenda los dispositivos ──────────
   services.pipewire.wireplumber.extraConfig."51-disable-suspension" = {

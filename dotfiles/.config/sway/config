@@ -5,20 +5,21 @@
 exec systemctl --user set-environment GTK_ICON_THEME=Adwaita
 exec systemctl --user import-environment GTK_ICON_THEME
 # --- ENTORNO DE SESIÓN ---
-# 1. Exportar variables clave al entorno de usuario de systemd
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP
+# 1. Exportar variables de entorno a Systemd y D-Bus
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland
 
-# 2. Actualizar DBus con las variables correctas
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland XDG_SESSION_DESKTOP=sway
+# 2. Reiniciar los portales para que lean las variables anteriores
+exec systemctl --user stop xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+exec systemctl --user start xdg-desktop-portal.service
 
-# 3. CRÍTICO: Reiniciar los portales para que recojan las variables anteriores
-exec systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-wlr.service
+# 3. Lanzar agente de autenticación
+exec /run/current-system/sw/bin/lxqt-policykit-agent
 
 # 4. Iniciar el target de Sway
 exec systemctl --user start sway-session.target
+
 # --- AUTOSTART ---
 # Nota el 'sleep 2' para dar tiempo a que las variables de arriba se procesen por completo
-exec /run/current-system/sw/bin/lxqt-policykit-agent
 exec ~/.local/bin/mic-keepalive.sh
 exec gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
 exec systemctl --user import-environment GTK_ICON_THEME
