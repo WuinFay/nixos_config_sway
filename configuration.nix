@@ -2,7 +2,7 @@
 # NixOS + Sway — Ryzen 5 5600G / RX 7600
 # Rolling release con flake (nixos-unstable)
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -95,17 +95,33 @@ boot.kernelParams = [
 # ── XDG Portals ───────────────────────────────────────────────
 
 # Configuración correcta de XDG Desktop Portals
+#xdg.portal = {
+#  enable = true;
+ # wlr.enable = true; # Portal específico para compositores basados en wlroots como Sway
+  #extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; # Necesario para los selectores de archivos/ventanas
+  #config = {
+   # common = {
+     # default = [ "wlr" "gtk" ];
+ #   };
+ # };
+#};
 xdg.portal = {
   enable = true;
-  wlr.enable = true; # Portal específico para compositores basados en wlroots como Sway
-  extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; # Necesario para los selectores de archivos/ventanas
+  wlr.enable = true;
+  extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   config = {
     common = {
       default = [ "wlr" "gtk" ];
     };
   };
 };
-
+xdg.portal.wlr.settings = {
+  screencast = {
+    output_name = "";
+    max_fps = 30;
+    chooser_type = "none";
+  };
+};
 
   # ── Gestor de sesión — greetd + tuigreet ─────────────────────
   services.greetd = {
@@ -240,15 +256,18 @@ programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
   programs.gamescope.enable = true;
 
   # ── Nix store — optimización y recolección de basura ─────────
-  nix.settings.auto-optimise-store = true;
-  nix.gc = {
+
+nix = {
+  settings = {
+    auto-optimise-store   = true;
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+  gc = {
     automatic = true;
     dates     = "weekly";
     options   = "--delete-older-than 7d";
   };
-   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
-  };
+};
   # ── Fuentes ───────────────────────────────────────────────────
 fonts.packages = with pkgs; [
   inter               # Corregido: sin el "pkgs."
