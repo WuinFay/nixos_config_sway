@@ -73,17 +73,28 @@ boot.kernelParams = [
   #programs.waybar.enable  = true;
   programs.dconf.enable   = true;
   security.polkit.enable  = true;
-  programs.nix-ld.enable = true;
+programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
-  # Agrega aquí las librerías dinámicas básicas que pueda llegar a necesitar el agente
-  stdenv.cc.cc.lib
-  zlib
-];
+    stdenv.cc.cc.lib
+    zlib
+    # Dependencias necesarias para JavaFX / SKlauncher
+    gtk3
+    glib
+    pango
+    cairo
+    gdk-pixbuf
+    atk
+    xorg.libX11
+    xorg.libXtst
+  ];
   # Módulo oficial de NixOS para habilitar la extensión automáticamente
   programs.nautilus-open-any-terminal = {
     enable = true;
     terminal = "sakura";
   };
+
+
+
 
 # Configuración global de dconf para la extensión de Nautilus
   # Habilitar dconf (Obligatorio)
@@ -217,6 +228,8 @@ services.pipewire.wireplumber.extraConfig."51-disable-suspension" = {
   # Activa los módulos de pixbuf necesarios para renderizar SVG
 programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
+
+
   # ── Journald ──────────────────────────────────────────────────
   services.journald.extraConfig = ''
     SystemMaxUse=500M
@@ -254,6 +267,7 @@ programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
   programs.steam.enable    = true;
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
+  
 
   # ── Nix store — optimización y recolección de basura ─────────
 
@@ -281,6 +295,7 @@ fonts.packages = with pkgs; [
   environment.systemPackages = with pkgs; [
   openrazer-daemon
   shotcut
+  jdk21
   polychromatic
   # Terminales
   sakura micro fastfetch htop config.boot.kernelPackages.cpupower

@@ -1,13 +1,13 @@
 # ============================================================
 # ~/.config/sway/config
-# Hardware: Ryzen 5 5600G + RX 7600 XFX | CachyOS / Sway
+# Hardware: Ryzen 5 5600G + RX 7600 XFX |NixOS / Sway
 # ============================================================
 exec systemctl --user set-environment GTK_ICON_THEME=Adwaita
 exec systemctl --user import-environment GTK_ICON_THEME
 # --- ENTORNO DE SESIÓN ---
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
-
+exec /run/current-system/sw/bin/lxqt-policykit-agent
 # --- REINICIO DE PORTALES (CON SLEEPS Y ORDEN) ---
 
 
@@ -15,7 +15,7 @@ exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CU
 # Nota el 'sleep 2' para dar tiempo a que las variables de arriba se procesen por completo
 exec ~/.local/bin/mic-keepalive.sh
 exec gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
-exec systemctl --user import-environment GTK_ICON_THEME
+
 
 # --- MODO NOCTURNO (7pm - 7am) ---
 exec wlsunset -s 07:00 -S 19:00 -t 6500 -T 3500
@@ -44,8 +44,8 @@ for_window [class="bloodstrike.exe"] allow_tearing yes
 for_window [class="bloodstrike.exe"] max_render_time off
 
 # Inhibit idle — XWayland y Wayland nativo
-for_window [class="."] inhibit_idle visible
-for_window [app_id="."] inhibit_idle visible
+for_window [class=".*"] inhibit_idle visible
+for_window [app_id=".*"] inhibit_idle visible
 
 # L4D2 / Source Engine
 for_window [class="hl2_linux"] fullscreen enable
