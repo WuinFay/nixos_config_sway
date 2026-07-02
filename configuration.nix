@@ -29,22 +29,26 @@ boot.kernelParams = [
   # ── Red ───────────────────────────────────────────────────────
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  
-  # Forzar a NixOS a escribir Cloudflare al inicio de /etc/resolv.conf
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
 
-  # Configuración moderna de NetworkManager estructurada en Nix
+  # Indicarle a NetworkManager que use systemd-resolved
   networking.networkmanager.settings = {
     main = {
-      dns = "default";
-    };
-    connection = {
-      "ipv4.dns" = "1.1.1.1,1.0.0.1";
-      "ipv6.dns" = "2606:4700:4700::1111,2606:4700:4700::1001";
-      "ipv4.dns-order" = "-1";
-      "ipv6.dns-order" = "-1";
+      dns = "systemd-resolved";
     };
   };
+
+  # Configuración estructurada y moderna de systemd-resolved
+  services.resolved = {
+    enable = true;
+    settings = {
+      Resolve = {
+        DNSSEC = "true";
+        FallbackDNS = "1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001";
+      };
+    };
+  };
+
+
 
 
 
