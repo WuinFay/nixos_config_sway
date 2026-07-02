@@ -30,12 +30,22 @@ boot.kernelParams = [
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   
-  # Forzar los DNS globales a nivel de sistema
+  # Forzar a NixOS a escribir Cloudflare al inicio de /etc/resolv.conf
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
 
-  # Forzar a NetworkManager a ignorar los DNS del DHCP del módem
-  networking.networkmanager.connectionConfig."ipv4.dns-ignore-auto" = "yes";
-  networking.networkmanager.connectionConfig."ipv6.dns-ignore-auto" = "yes";
+  # Configuración moderna de NetworkManager estructurada en Nix
+  networking.networkmanager.settings = {
+    main = {
+      dns = "default";
+    };
+    connection = {
+      "ipv4.dns" = "1.1.1.1,1.0.0.1";
+      "ipv6.dns" = "2606:4700:4700::1111,2606:4700:4700::1001";
+      "ipv4.dns-order" = "-1";
+      "ipv6.dns-order" = "-1";
+    };
+  };
+
 
 
 
