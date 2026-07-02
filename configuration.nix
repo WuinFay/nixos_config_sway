@@ -29,7 +29,8 @@ boot.kernelParams = [
   # ── Red ───────────────────────────────────────────────────────
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
+ networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+
 
   # ── Zona horaria e idioma ─────────────────────────────────────
   time.timeZone = "America/Mexico_City";
