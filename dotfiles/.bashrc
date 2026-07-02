@@ -24,51 +24,49 @@ export DXVK_STATE_CACHE=1
 export MESA_SHADER_CACHE_DISABLE=false
 export MESA_SHADER_CACHE_MAX_SIZE=1G
 
-# ── Wayland / Sway ────────────────────────
-export XDG_CURRENT_DESKTOP=sway
-export GDK_BACKEND=wayland
-export QT_QPA_PLATFORM=wayland
-export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-export SDL_VIDEODRIVER=wayland,x11
-export MOZ_ENABLE_WAYLAND=1
+
 
 # ── Aliases ───────────────────────────────
-
 alias gamemode='gamemoderun'
 alias grabar='wf-recorder -f "/run/media/lonso/ALONSOUSB/$(date +"%Y%m%d_%H%M%S").mp4"'
 alias normal='sudo /run/current-system/sw/bin/perfil-cpu normal'
 alias turbo='sudo /run/current-system/sw/bin/perfil-cpu turbo'
 alias nadmin='nautilus admin:///'
+
 # 1. Actualizar el sistema localmente (sin subir a GitHub)
-alias actualizar='sudo nixos-rebuild switch --flake /home/lonso/nixos-config#nixos'
+alias actualizar='sudo nixos-rebuild switch --flake ~/nixos-config#nixos'
 
 
-# 2. Entrar a la carpeta y revisar el Flake (sin añadir automáticamente)
-alias revisar='cd /home/lonso/nixos-config && nix flake check'
+# 2. Revisar el Flake sin modificar nada
+alias revisar='cd ~/nixos-config && nix flake check'
 
-# Versión ultra-segura: añade TODO lo que haya en el repo
-alias respaldar='\
-  rsync -av ~/.bashrc ~/nixos-config/dotfiles/ && \
-  cd ~/nixos-config && \
-  git add -A && \
-  git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
-  git push origin main --force'
+
+# 3. Copiar dotfiles de ~/.config al repo (paso previo a respaldar)
 alias copiar-config='\
   echo "📂 Copiando dotfiles esenciales al repo..." && \
   cp ~/.bashrc ~/nixos-config/dotfiles/.bashrc && \
-  cp -r ~/.config/fastfetch ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/gtk-3.0 ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/gtk-4.0 ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/rofi ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/sakura ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/sway ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/waybar ~/nixos-config/dotfiles/.config/ && \
-  cp -r ~/.config/wlogout ~/nixos-config/dotfiles/.config/ && \
-  echo "✅ Dotfiles copiados al repo. Ahora ejecuta respaldar"'
+  for dir in fastfetch gtk-3.0 gtk-4.0 rofi sakura sway waybar wlogout; do \
+    if [ -d ~/.config/$dir ]; then \
+      cp -r ~/.config/$dir ~/nixos-config/dotfiles/.config/; \
+    else \
+      echo "⚠️  Omitido: ~/.config/$dir no existe"; \
+    fi; \
+  done && \
+  echo "✅ Dotfiles copiados. Ahora ejecuta: respaldar"'
+
+# 4. Commit y push al repo (ejecutar después de copiar-config)
+alias respaldar='\
+  cd ~/nixos-config && \
+  git add -A && \
+  git commit -m "Backup: $(date +%d-%m-%Y_%H:%M)" && \
+  git push --force-with-lease origin main'
 # ── Juegos ──────────────────────────────────
-alias tmod="cd /home/lonso/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
-alias terra="cd /home/lonso/Terraria_Vanilla/terraria-server-1456/1456/Linux && ./TerrariaServer.bin.x86_64"
-alias mcjava="cd /home/lonso/minecraft-server && bash run.sh nogui"
+alias tmod="cd $HOME/Tmod/tModLoader && ./start-tModLoaderServer.sh -config serverconfig.txt"
+
+alias terra="cd $HOME/Terraria_Vanilla/terraria-server-1456/1456/Linux && ./TerrariaServer.bin.x86_64"
+
+alias mcjava="cd $HOME/minecraft-server && bash run.sh nogui"
+
 alias playit='~/.local/bin/playit --socket-path /tmp/playit-manual.socket &'
 
 # ── Bienvenida ────────────────────────────
