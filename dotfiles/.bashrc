@@ -22,7 +22,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export MAKEFLAGS="-j$(nproc)"
 export DXVK_STATE_CACHE=1
 export MESA_SHADER_CACHE_DISABLE=false
-export MESA_SHADER_CACHE_MAX_SIZE=1G
 
 
 
