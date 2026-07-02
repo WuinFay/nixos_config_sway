@@ -31,22 +31,48 @@ boot.kernelParams = [
   networking.networkmanager.enable = true;
 
   # Indicarle a NetworkManager que use systemd-resolved
-  networking.networkmanager.settings = {
-    main = {
-      dns = "systemd-resolved";
+networking.networkmanager.settings = {
+  main = {
+    dns = "systemd-resolved";
+  };
+  connection = {
+    "ipv4.ignore-auto-dns" = "true";
+    "ipv6.ignore-auto-dns" = "true";
+  };
+};
+
+  # Configuración robusta de systemd-resolved
+services.resolved = {
+  enable = true;
+  settings = {
+    Resolve = {
+      DNS = "1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001";
+      DNSSEC = "allow-downgrade";
+      Domains = "~.";   # ← esto hace que el DNS global sea catch-all,
+                        #   con prioridad sobre los DNS del DHCP del módem
     };
   };
-
-  # Configuración estructurada y moderna de systemd-resolved
-  services.resolved = {
-    enable = true;
-    settings = {
-      Resolve = {
-        DNSSEC = "true";
-        FallbackDNS = "1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001";
+};
+networking.networkmanager.ensureProfiles = {
+  environmentFiles = [];
+  profiles = {
+    "Conexión cableada 1" = {
+      connection = {
+        id = "Conexión cableada 1";
+        type = "ethernet";
+        uuid = "6c15a5b4-c675-32ef-9235-56c1d0cc10d0";
+      };
+      ipv4 = {
+        method = "auto";
+        ignore-auto-dns = "true";
+      };
+      ipv6 = {
+        method = "auto";
+        ignore-auto-dns = "true";
       };
     };
   };
+};
 
 
 
