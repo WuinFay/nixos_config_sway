@@ -29,7 +29,14 @@ boot.kernelParams = [
   # ── Red ───────────────────────────────────────────────────────
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
- networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+  
+  # Forzar los DNS globales a nivel de sistema
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+
+  # Forzar a NetworkManager a ignorar los DNS del DHCP del módem
+  networking.networkmanager.connectionConfig."ipv4.dns-ignore-auto" = "yes";
+  networking.networkmanager.connectionConfig."ipv6.dns-ignore-auto" = "yes";
+
 
 
   # ── Zona horaria e idioma ─────────────────────────────────────
