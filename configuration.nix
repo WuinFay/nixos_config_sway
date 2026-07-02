@@ -285,18 +285,29 @@ programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
   '';
 
   # ── Variables de sesión GPU (RX 7600 / RDNA3) ────────────────
-  environment.sessionVariables = {
-    WINEESYNC              = "1";
-    WINEFSYNC              = "1";
-    RADV_PERFTEST          = "gpl";
-    mesa_glthread          = "true";
-    MESA_SHADER_CACHE_MAX_SIZE = "1G";
-    NIXOS_OZONE_WL         = "1";
-  };
-  environment.variables = {
+environment.sessionVariables = {
+  # GPU / Wine
+  WINEESYNC                    = "1";
+  WINEFSYNC                    = "1";
+  RADV_PERFTEST                = "gpl";
+  mesa_glthread                = "true";
+  MESA_SHADER_CACHE_MAX_SIZE   = "1G";
+  NIXOS_OZONE_WL               = "1";
+
+  # Wayland / backends
+  XDG_CURRENT_DESKTOP          = "sway";
+  GDK_BACKEND                  = "wayland";
+  QT_QPA_PLATFORM              = "wayland";
+  QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+  SDL_VIDEODRIVER              = "wayland,x11";
+  MOZ_ENABLE_WAYLAND           = "1";
+  ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+};
+
+environment.variables = {
   XCURSOR_THEME = "breeze_cursors";
-  XCURSOR_SIZE = "24";
- };
+  XCURSOR_SIZE  = "24";
+};
 
 
   # ── Sudo sin contraseña para perfil-cpu ──────────────────────
